@@ -62,7 +62,7 @@
 
         <p id="content">
             You have logged in! <br>
-            <h2><a href="home_appliances_list.php">Enter list of goods to start uploading!</a></h2>
+            <h2>My Page Content Here</h2>
         </p>
 
         <?php } ?>

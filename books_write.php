@@ -15,9 +15,6 @@
     $data = mysqli_fetch_array($result);
 ?>
 
-<head>
-    <link rel="stylesheet" href="project.css">
-</head>
 
 <form action="books_writePost.php" method="post" enctype="multipart/form-data"> 
     <input type="hidden" name="idx" value="<?=$idx?>">

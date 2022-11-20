@@ -1,10 +1,9 @@
-//const ptr = document.getElementById("register");
+const ptr = document.getElementById("register");
 
-//ptr.addEventListener("click",function(event){
-//	event.preventDefault()
-function password_checker() {	
+ptr.addEventListener("click",function(event){
+	event.preventDefault()
+	
 	var a = true;
-	alert('function works');
 
 	var log_id = document.getElementById('logid').value;
 
@@ -96,8 +95,10 @@ function password_checker() {
 
 
 	if(a){
-		
+		alert("Registration Success!");
 	}
 
 
-}
+
+	
+})

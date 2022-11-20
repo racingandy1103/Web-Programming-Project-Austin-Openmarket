@@ -15,11 +15,8 @@
     $data = mysqli_fetch_array($result);
 ?>
 
-<head>
-    <link rel="stylesheet" href="project.css">
-</head>
 
-<form action="healthandbeauty_writePost.php" method="post" enctype="multipart/form-data"> 
+<form action="healthandbeauty_writePost.php" method="post"> 
     <input type="hidden" name="idx" value="<?=$idx?>">
     <table width=800 border="1" cellpadding=5 >
         <tr>

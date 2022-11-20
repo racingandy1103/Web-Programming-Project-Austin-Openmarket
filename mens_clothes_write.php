@@ -15,9 +15,6 @@
     $data = mysqli_fetch_array($result);
 ?>
 
-<head>
-    <link rel="stylesheet" href="project.css">
-</head>
 
 <form action="mens_clothes_writePost.php" method="post"> 
     <input type="hidden" name="idx" value="<?=$idx?>">

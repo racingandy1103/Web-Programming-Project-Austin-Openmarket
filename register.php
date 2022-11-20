@@ -8,8 +8,7 @@
         <meta name="description" content="Register Account">
         <meta name="author" content="Group 10 (Dogyun Kim, Yang-Kai Hsieh, Lavanya Makdani, Nitya Kopparapu)">
         <link rel="stylesheet" href="project.css">
-        <script src="register.js" defer></script> 
-        
+        <script src="register.js" defer></script>
     </head>
 
     <body>
@@ -30,7 +29,7 @@
                 <a href=tips_for_safe_transactions.html> Tips for Safe Transactions </a>
             </p>
             <p>
-                <a href=home_appliances_list.php> List of Goods </a>
+                <a href=listofgoods_homeappliances.html> List of Goods </a>
             </p>
             <p>
                 <a href=my_page.php> My page </a> <!--redundant??should we have it after logging in-->
@@ -43,17 +42,11 @@
             </p>
         </div>
 
-        <?php
-
-            if(!isset($_COOKIE['logname'])) {
-
-        ?>
-
 
         
 
         <div id="login">
-            <form method = 'post'> <!-- onsubmit="login()"-->
+            <form onsubmit="login()">
 
     
                 <div id= "regtxt">
@@ -68,10 +61,10 @@
         
 
                     Please enter your desired password:
-                     <input required type="password" name="pass" id="pass" placeholder= "Please enter your password here" style="height:28px; width:375px; font-size: 13pt" onchange="password_checker()"><br>
+                     <input required type="text" name="pass" id="pass" placeholder= "Please enter your password here" style="height:28px; width:375px; font-size: 13pt"><br>
 
                      Please re-enter your desired password:
-                     <input required type="password" name="re_pass" id="re_pass" placeholder= "Please enter your password here" style="height:28px; width:375px; font-size: 13pt"><br>
+                     <input required type="text" name="re_pass" id="re_pass" placeholder= "Please enter your password here" style="height:28px; width:375px; font-size: 13pt"><br>
             
 
 
@@ -83,7 +76,7 @@
 
                 
                     <p id = "required">
-                    <b> Things to note when creating account:</b><br>
+                    <b> Things to be note when creating account:</b><br>
                     The username and password must be between 6 and 20 characters long, inclusive.<br>
                     Username and password are case sensitive, so enter carefully<br>
                     The username and password must contain only letters and digits.<br>
@@ -93,15 +86,6 @@
                 
 
         </div>
-
-        <?php }else{ ?>
-
-        <p id="content">
-            You have logged in! <br>
-            Check My page for more information.
-        </p>
-
-        <?php } ?>
 
         
 
@@ -118,66 +102,36 @@
 
         <?php
 
-            //error_reporting(E_ALL);
-            //ini_set("display_errors", "on");
-            $lastName = $_POST["logid"];
-            $firstName = $_POST["pass"];
-            $server = "spring-2021.cs.utexas.edu";
-            $user   = "cs329e_bulko_lavanyam";
-            $pwd    = "Whole6Inlet6shore";
-            $dbName = "cs329e_bulko_lavanyam";
-
-            $mysqli = new mysqli($server, $user, $pwd, $dbName);
-
-            if ($mysqli->connect_errno) {
-                die('Connect Error: ' . $mysqli->connect_errno . ": " .  $mysqli->connect_error);
-            } 
-            else {
-                //echo "<code>...Connection successful</code> <br>";
-
-            }
-            //Select Database
-            $mysqli->select_db($dbName) or die($mysqli->error);
-            $lastName = $mysqli->real_escape_string($lastName);
-            $firstName = $mysqli->real_escape_string($firstName);
-
-            $query1 = "SELECT username, passwords FROM website_users WHERE username = '$lastName' AND passwords = '$firstName'";
-            $result1 = $mysqli->query($query1) or die($mysqli->error);
-            $row = $result1->fetch_array(MYSQLI_ASSOC);
-            $query4 = "SELECT username FROM website_users WHERE username = '$lastName'";
-            $result4 = $mysqli->query($query4) or die($mysqli->error);
-            $row4 = $result4->fetch_array(MYSQLI_ASSOC);
-
-            if (!empty($_POST)){
-                if($row4['usernames']) {
+            if((!empty($_POST))){
+                $used = false;
+                $file_r = fopen("passwd.txt", "r+");
+                while (($line = fgets($file_r)) !== false) {
+                    $line = str_replace("\n", "", $line);
+                    $group = explode(":", $line);
+                    if($_POST['logid'] == $group[0]){
+                        $used = true;
+                    }
+                }
+                fclose($file_r);
+        
+                if($used){
                     echo "<div id= 'login'>";
                     echo "This username has been used. Please pick another username";
                     echo "</div>";
-                    } 
-                else{
-                //echo "This username doesn't exist, inserting into table";
-                    $query2 = "INSERT INTO website_users VALUES ('$lastName', '$firstName')";
-                    $result2 = $mysqli->query($query2) or die($mysqli->error);
-                    setcookie("logname", "$lastName", time()+(900), "/");
+                }else{
+                    $file_w = fopen("passwd.txt", "a");
+                    $string1 = $_POST['logid'] . ":";
+                    fwrite($file_w, $string1);
+                    $string2 = $_POST['pass'] . "\n";
+                    fwrite($file_w, $string2);
+                    fclose($file_w);
+                    setcookie("logname", "$string1", time()+(60), "/");
                     header("Location:my_page.php");
-                    }
+            
+                }
 
+        
             }
-            
-            // $file_r = fopen("passwd.txt", "r+");
-            // while (($line = fgets($file_r)) !== false) {
-            //     $line = str_replace("\n", "", $line);
-            //     $group = explode(":", $line);
-            //     if($_POST['logid'] == $group[0]){
-            //         $used = true;
-            //     }
-            // }
-            // fclose($file_r);
-        
-                
-
-        
-            
 
         ?>
     </body>

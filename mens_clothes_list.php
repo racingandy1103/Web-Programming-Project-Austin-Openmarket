@@ -42,7 +42,7 @@
                 <a href=tips_for_safe_transactions.html> Tips for Safe Transactions </a>
             </p>
             <p>
-                <a href=home_appliances_list.php> List of Goods </a>            
+                <a href=home_appliances_list.php> List of Goods </a>
             </p>
             <p>
                 <a href=my_page.php> My page </a> <!--redundant??should we have it after logging in-->
@@ -68,14 +68,11 @@
             <a href="others_list.php">Others</a>
         </div>
         
-        <form action="mens_clothes_search.php" method="post">
-            <div style="float:right;">
-                <label for="mens_clothes_search">Search what you need:</label>
-                <input type="text" id="mens_clothes_search" name="skey">
-                <input type="submit" value="Search">
-            </div>
-        </form>
-        
+        <span id="searchbox" style="float:right">
+            <input type="search" placeholder="search what you need">
+            <i class="fas fa-search"></i>
+        </span>
+
         <div style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Categories</div>
 
         <script>
@@ -88,8 +85,7 @@
             }
         </script>
 
-        <span class = "title" style="color:grey; font-size:30px;">Men's clothes</span>
-        <a href="mens_clothes_write.php">Post My Item</a> 
+        <span class = "title" style="color:grey; font-size:30px;">Men's Clothes</span>
 
         <table width=800 border="1" >
             <tr>
@@ -101,6 +97,7 @@
             </tr>    
 
         <?php
+
             $query = "SELECT * FROM mens_clothes ORDER BY idx DESC";
             $result = mysqli_query($conn, $query);
 
@@ -108,14 +105,16 @@
         ?>
             <tr>
                 <td> <?=$data[idx]?> </td>
-                <td> <a href="mens_clothes_view.php?idx=<?=$data[idx]?>"><?=$data[subject]?><br>
-                <img src="<?=$data[image]?>" width="250" height="400"></a> </td>
+                <td> <a href="mens_clothes_view.php?idx=<?=$data[idx]?>"><?=$data[subject]?></a> </td>
                 <td> <?=$data[price]?> </td>
                 <td> <?=$data[contact]?> </td>
                 <td> <?=substr($data[regdate],0,10)?> </td>
 
         <?php } ?>
         </table>
+
+
+        <a href="mens_clothes_write.php">Post My Item</a> 
 
         <div id="footer">
             <span>

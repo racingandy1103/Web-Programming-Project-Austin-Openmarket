@@ -15,11 +15,8 @@
     $data = mysqli_fetch_array($result);
 ?>
 
-<head>
-    <link rel="stylesheet" href="project.css">
-</head>
 
-<form action="womens_clothes_writePost.php" method="post" enctype="multipart/form-data"> 
+<form action="womens_clothes_writePost.php" method="post"> 
     <input type="hidden" name="idx" value="<?=$idx?>">
     <table width=800 border="1" cellpadding=5 >
         <tr>
@@ -45,7 +42,7 @@
             <td>
                     <input type="file" name="fileToUpload" id="fileToUpload">
             </td>
-        </tr>
+        </tr>        
         <tr>
             <th> Password </th> 
             <td> <input type="password" name="pwd" placeholder="password" size=20> </td>
