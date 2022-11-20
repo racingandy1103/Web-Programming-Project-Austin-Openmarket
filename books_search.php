@@ -18,7 +18,7 @@
         <title>Products</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">        
-        <meta name="description" content="womens_clothes">
+        <meta name="description" content="books">
         <meta name="author" content="Group 10">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="project.css">
@@ -68,14 +68,14 @@
             <a href="others_list.php">Others</a>
         </div>
         
-        <form action="womens_clothes_search.php" method="post">
+        <form action="books_search.php" method="post">
             <div style="float:right;">
-                <label for="womens_clothes_search">Search what you need:</label>
-                <input type="text" id="womens_clothes_search" name="skey">
+                <label for="books_search">Search what you need:</label>
+                <input type="text" id="books_search" name="skey">
                 <input type="submit" value="Search">
             </div>
         </form>
-        
+
         <div style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Categories</div>
 
         <script>
@@ -88,8 +88,8 @@
             }
         </script>
 
-        <span class = "title" style="color:grey; font-size:30px;">Women's Clothes</span>
-        <a href="womens_clothes_write.php">Post My Item</a> 
+        <span class = "title" style="color:grey; font-size:30px;">Books</span>
+        <a href="books_write.php">Post My Item</a> 
 
         <table width=800 border="1" >
             <tr>
@@ -101,14 +101,16 @@
             </tr>    
 
         <?php
-            $query = "SELECT * FROM womens_clothes ORDER BY idx DESC";
+            $user_skey = $_POST['skey'];
+
+            $query = "SELECT * FROM books WHERE subject like '%$user_skey%' ORDER BY idx DESC";
             $result = mysqli_query($conn, $query);
 
             while($data = mysqli_fetch_array($result)){
         ?>
             <tr>
                 <td> <?=$data[idx]?> </td>
-                <td> <a href="womens_clothes_view.php?idx=<?=$data[idx]?>"><?=$data[subject]?><br>
+                <td> <a href="books_view.php?idx=<?=$data[idx]?>"><?=$data[subject]?><br>
                 <img src="<?=$data[image]?>" width="250" height="400"></a> </td>
                 <td> <?=$data[price]?> </td>
                 <td> <?=$data[contact]?> </td>

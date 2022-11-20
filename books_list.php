@@ -68,19 +68,14 @@
             <a href="others_list.php">Others</a>
         </div>
         
-        <form action=<?=$PHP_SELF?>>
-        <input type=hidden name=id value='<?=$idx?>'>
-            <span style="float:right"> Search What You Need
-                <select name=search_mode>
-                    <option value='1'> By Contact Number
-                    <option value='2'> By Title 
-                    <option value='3'> By Description
-                    <option value='4'> By Contact Number + Title + Description
-                </select>            
-                <input type=text name=search_text size=10>
-                <input type=submit value='search'>
-            </span>
+        <form action="books_search.php" method="post">
+            <div style="float:right;">
+                <label for="books_search">Search what you need:</label>
+                <input type="text" id="books_search" name="skey">
+                <input type="submit" value="Search">
+            </div>
         </form>
+        
         <div style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Categories</div>
 
         <script>
@@ -94,6 +89,7 @@
         </script>
 
         <span class = "title" style="color:grey; font-size:30px;">Books</span>
+        <a href="books_write.php">Post My Item</a> 
 
         <table width=800 border="1" >
             <tr>
@@ -105,21 +101,6 @@
             </tr>    
 
         <?php
-
-            // $where = " idx='$idx' ";
-            // when users search using search bar
-            // if ($search_text){
-                if($search_mode==1) $tmp = "contact";
-                if($search_mode==2) $tmp = "subject";
-                if($search_mode==3) $tmp = "memo";
-
-                $where = "'$tmp' like '%$search_text%' ";
-
-                // if($search_mode==4) {
-                //     $where .= " and (contact like '%$search_text%' or subject like '%$search_text%' or memo like '%$search_text%') ";
-                // }
-            // }
-
             $query = "SELECT * FROM books ORDER BY idx DESC";
             $result = mysqli_query($conn, $query);
 
@@ -127,16 +108,14 @@
         ?>
             <tr>
                 <td> <?=$data[idx]?> </td>
-                <td> <a href="books_view.php?idx=<?=$data[idx]?>"><?=$data[subject]?></a> </td>
+                <td> <a href="books_view.php?idx=<?=$data[idx]?>"><?=$data[subject]?><br>
+                <img src="<?=$data[image]?>" width="250" height="400"></a> </td>
                 <td> <?=$data[price]?> </td>
                 <td> <?=$data[contact]?> </td>
                 <td> <?=substr($data[regdate],0,10)?> </td>
 
         <?php } ?>
         </table>
-
-
-        <a href="books_write.php">Post My Item</a> 
 
         <div id="footer">
             <span>

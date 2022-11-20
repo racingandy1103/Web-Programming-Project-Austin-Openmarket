@@ -75,7 +75,7 @@
                 <input type="submit" value="Search">
             </div>
         </form>
-        
+
         <div style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Categories</div>
 
         <script>
@@ -101,7 +101,9 @@
             </tr>    
 
         <?php
-            $query = "SELECT * FROM womens_clothes ORDER BY idx DESC";
+            $user_skey = $_POST['skey'];
+
+            $query = "SELECT * FROM womens_clothes WHERE subject like '%$user_skey%' ORDER BY idx DESC";
             $result = mysqli_query($conn, $query);
 
             while($data = mysqli_fetch_array($result)){

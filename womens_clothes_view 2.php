@@ -10,7 +10,7 @@
     }
     
     $idx = $_GET['idx'];
-    $query = "SELECT * FROM healthandbeauty where idx='$idx' ";
+    $query = "SELECT * FROM womens_clothes where idx='$idx' ";
     $result = mysqli_query($conn, $query);
     $data = mysqli_fetch_array($result);
 
@@ -20,11 +20,7 @@
     $to = "images/" . $filename;
 ?>
 
-<head>
-    <link rel="stylesheet" href="project.css">
-</head>
-
-<form action="healthandbeauty_writePost.php" method="post"> 
+<form action="womens_clothes_writePost.php" method="post"> 
     <input type="hidden" name="idx" value="<?=$idx?>">
     <table width=800 border="1" cellpadding=5 >
         <tr>
@@ -40,19 +36,20 @@
             <td> <?=$data[price]?> </td>
         </tr>
         <tr>
-            <th> Description </th> 
-            <td><?php if ($data[image]!='images/.') echo "<img src=\"$data[image]\" width=\"250\" height=\"400\"><br>";?>
+            <th> Description </th>
+            <td> <img src="<?=$data[image]?>" width="250" height="400">
+            <br> 
             <?=nl2br($data[memo])?></td>
         </tr>
 
         <tr>
             <td colspan="2">
                 <div style="float:right; ">
-                    <a href="healthandbeauty_confirmDel.php?idx=<?=$idx?>">Delete</a>
-                    <a href="healthandbeauty_write.php?idx=<?=$idx?>">Update</a>
+                    <a href="womens_clothes_confirmDel.php?idx=<?=$idx?>">Delete</a>
+                    <a href="womens_clothes_write.php?idx=<?=$idx?>">Update</a>
                 </div>
 
-                <a href="healthandbeauty_list.php">Go back to list</a>
+                <a href="womens_clothes_list.php">Go back to list</a>
             </td>
         </tr>
     </table> 

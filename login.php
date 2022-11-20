@@ -28,7 +28,7 @@
                 <a href=tips_for_safe_transactions.html> Tips for Safe Transactions </a>
             </p>
             <p>
-                <a href=listofgoods_homeappliances.html> List of Goods </a>
+                <a href=home_appliances_list.php> List of Goods </a>
             </p>
             <p>
                 <a href=my_page.php> My page </a> <!--redundant??should we have it after logging in-->
@@ -60,8 +60,7 @@
         
 
                     Please enter your password:
-                     <input type="text" name="pass" id="pass" placeholder= "Please enter your password here" style="height:35px; width:400px; font-size: 15pt"><br>
-        
+                     <input type="password" name="pass" id="pass" placeholder= "Please enter your password here" style="height:35px; width:400px; font-size: 15pt"><br>
 
 
 
@@ -88,6 +87,7 @@
         <?php } ?>
 
 
+
         <div id="footer">
             <span>
                 <script> document.write(new Date().toLocaleDateString()); </script>
@@ -99,34 +99,65 @@
 
 
         <?php
-            error_reporting(E_ALL);
-            ini_set("display_errors", "on");
+            //error_reporting(E_ALL);
+            //ini_set("display_errors", "on");
+            
 
-            if (!isset($_COOKIE['logname'])) {
-                
+            $lastName = $_POST["logid"];
+            $firstName = $_POST["pass"];
+            $server = "spring-2021.cs.utexas.edu";
+            $user   = "cs329e_bulko_lavanyam";
+            $pwd    = "Whole6Inlet6shore";
+            $dbName = "cs329e_bulko_lavanyam";
 
-                $file = fopen ("passwd.txt", "r+");
+            $mysqli = new mysqli($server, $user, $pwd, $dbName);
 
-                if((!empty($_POST))){
-                    while (($line = fgets($file)) !== false) {
-                        $line = str_replace("\n", "", $line);
-                        $group = explode(":", $line);
-                        if($_POST["logid"] == $group[0]){
-                            if($_POST["pass"] == $group[1]){
-                                setcookie("logname", "$group[0]", time()+(60), "/");
-                                header("Location: my_page.php");
-                            }else{
-                                echo "Wrong Password<br>";
-                            }
-                        }
-                    }
-                echo "<p style='text-align:center; font-size: 20pt; color:red;'>Cannot find such Username</p>";
+            if ($mysqli->connect_errno) {
+                die('Connect Error: ' . $mysqli->connect_errno . ": " .  $mysqli->connect_error);
+            } 
+            else {
+                //echo "<code>...Connection successful</code> <br>";
+            
+            }
+            //Select Database
+            $mysqli->select_db($dbName) or die($mysqli->error);
+            $lastName = $mysqli->real_escape_string($lastName);
+            $firstName = $mysqli->real_escape_string($firstName);
+
+            $query1 = "SELECT username, passwords FROM website_users WHERE username = '$lastName' AND passwords = '$firstName'";
+            $result1 = $mysqli->query($query1) or die($mysqli->error);
+            $row = $result1->fetch_array(MYSQLI_ASSOC);
+            $query4 = "SELECT username FROM website_users WHERE username = '$lastName'";
+            $result4 = $mysqli->query($query4) or die($mysqli->error);
+            $row4 = $result4->fetch_array(MYSQLI_ASSOC);
         
-                }else{
-                    
-                }   
-    }
 
+
+            if (!empty($_POST)){
+            if(!is_null($row['username'])) {
+                //echo "This username doesn't exist, inserting into table";
+                setcookie("logname", "$lastName", time()+(900), "/");
+                header('Location:my_page.php');
+                echo "User confirmed";
+                } 
+                else if(is_null($row4['username'])) {
+                    echo "
+                    <script>
+                    alert('Username not found please register!');
+                    </script>
+                    ";
+                    } 
+                else if($row4['passwords'] != $firstName ){
+                    echo "
+                    <script>
+                    alert('Wrong password, please try again!');
+                    </script>
+                    ";
+                
+                    } 
+            
+            }
+        
 
 ?>
 

@@ -12,6 +12,9 @@
     $idx = $_GET['idx'];
 ?>
 
+<head>
+    <link rel="stylesheet" href="project.css">
+</head>
 
 <form action="sporting_goods_del.php" method="post"> 
     <input type="hidden" name="idx" value="<?=$idx?>">

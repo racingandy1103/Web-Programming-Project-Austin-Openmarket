@@ -12,11 +12,8 @@
     $idx = $_GET['idx'];
 ?>
 
-<head>
-    <link rel="stylesheet" href="project.css">
-</head>
 
-<form action="books_del.php" method="post"> 
+<form action="womens_clothes_del.php" method="post"> 
     <input type="hidden" name="idx" value="<?=$idx?>">
     <table width=800 border="1" cellpadding=5 >
         <tr>

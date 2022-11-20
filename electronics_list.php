@@ -68,11 +68,14 @@
             <a href="others_list.php">Others</a>
         </div>
         
-        <span id="searchbox" style="float:right">
-            <input type="search" placeholder="search what you need">
-            <i class="fas fa-search"></i>
-        </span>
-
+        <form action="electronics_search.php" method="post">
+            <div style="float:right;">
+                <label for="electronics_search">Search what you need:</label>
+                <input type="text" id="electronics_search" name="skey">
+                <input type="submit" value="Search">
+            </div>
+        </form>
+        
         <div style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Categories</div>
 
         <script>
@@ -86,6 +89,7 @@
         </script>
 
         <span class = "title" style="color:grey; font-size:30px;">Electronics</span>
+        <a href="electronics_write.php">Post My Item</a> 
 
         <table width=800 border="1" >
             <tr>
@@ -97,7 +101,6 @@
             </tr>    
 
         <?php
-
             $query = "SELECT * FROM electronics ORDER BY idx DESC";
             $result = mysqli_query($conn, $query);
 
@@ -105,16 +108,14 @@
         ?>
             <tr>
                 <td> <?=$data[idx]?> </td>
-                <td> <a href="electronics_view.php?idx=<?=$data[idx]?>"><?=$data[subject]?></a> </td>
+                <td> <a href="electronics_view.php?idx=<?=$data[idx]?>"><?=$data[subject]?><br>
+                <img src="<?=$data[image]?>" width="250" height="400"></a> </td>
                 <td> <?=$data[price]?> </td>
                 <td> <?=$data[contact]?> </td>
                 <td> <?=substr($data[regdate],0,10)?> </td>
 
         <?php } ?>
         </table>
-
-
-        <a href="electronics_write.php">Post My Item</a> 
 
         <div id="footer">
             <span>
